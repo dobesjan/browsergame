@@ -1,5 +1,6 @@
 using Auth0.AspNetCore.Authentication;
 using BrowserGame.DataAccess.Data;
+using BrowserGame.DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,7 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.ClientId = builder.Configuration["Authentication:ClientId"];
     options.ClientSecret = builder.Configuration["Authentication:ClientSecret"];
     options.Scope = "openid profile email";
-    options.CallbackPath = new PathString("/callback");
+    options.CallbackPath = new PathString("/account/callback");
 });
 
 builder.Services.AddHttpContextAccessor();
@@ -24,6 +25,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

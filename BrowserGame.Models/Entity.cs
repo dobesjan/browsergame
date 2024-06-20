@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.Models
 {
-    public class Entity
+    public class Entity : IEntity
     {
         [Key]
         public int Id { get; set; }

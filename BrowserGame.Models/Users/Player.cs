@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.Models.Users
 {
-    public class User : Entity
+    public class Player : Entity
     {
         public string UserId { get; set; }
     }
