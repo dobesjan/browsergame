@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BrowserGame.BusinessLayer\BrowserGame.BusinessLayer.csproj" />
     <ProjectReference Include="..\BrowserGame.DataAccess\BrowserGame.DataAccess.csproj" />
     <ProjectReference Include="..\BrowserGame.Models\BrowserGame.Models.csproj" />
   </ItemGroup>

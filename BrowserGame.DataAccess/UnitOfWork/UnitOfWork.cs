@@ -1,5 +1,6 @@
 ﻿using BrowserGame.DataAccess.Data;
 using BrowserGame.DataAccess.Repository.Users;
+using BrowserGame.DataAccess.Repository.Villages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace BrowserGame.DataAccess.UnitOfWork
         private ApplicationDbContext _context;
 
         public IPlayerRepository PlayerRepository { get; }
+        public IVillageRepository VillageRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
 
             PlayerRepository = new PlayerRepository(context);
+            VillageRepository = new VillageRepository(context);
         }
     }
 }

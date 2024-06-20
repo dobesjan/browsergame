@@ -1,8 +1,10 @@
 using Auth0.AspNetCore.Authentication;
+using BrowserGame.BusinessLayer.Resources;
 using BrowserGame.DataAccess.Data;
 using BrowserGame.DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 );
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+//builder.Services.AddScoped<IResourceService, ResourceService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

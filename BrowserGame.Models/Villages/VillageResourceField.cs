@@ -19,5 +19,9 @@ namespace BrowserGame.Models.Villages
 
         [ValidateNever]
         public ResourceField ResourceField { get; set; }
+
+        public int Level { get; set; }
+
+        public int ProductionPerHour { get; set; }
     }
 }

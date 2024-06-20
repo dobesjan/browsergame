@@ -1,4 +1,5 @@
 ﻿using BrowserGame.DataAccess.Repository.Users;
+using BrowserGame.DataAccess.Repository.Villages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace BrowserGame.DataAccess.UnitOfWork
     public interface IUnitOfWork
     {
         IPlayerRepository PlayerRepository { get; }
+        IVillageRepository VillageRepository { get; }
     }
 }

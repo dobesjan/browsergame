@@ -18,5 +18,7 @@ namespace BrowserGame.Models.Resources
 
         [ValidateNever]
         public List<VillageResourceField> VillageFields { get; set; }
+
+        public int MaxLevel { get; set; }
     }
 }

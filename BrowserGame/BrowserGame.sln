@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserGame", "BrowserGame.csproj", "{2F075511-56AD-45C8-A700-38003A8A9B69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrowserGame", "BrowserGame.csproj", "{2F075511-56AD-45C8-A700-38003A8A9B69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserGame.Models", "..\BrowserGame.Models\BrowserGame.Models.csproj", "{8AACE84C-94B1-4D73-AA19-BDA0ED73243D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrowserGame.Models", "..\BrowserGame.Models\BrowserGame.Models.csproj", "{8AACE84C-94B1-4D73-AA19-BDA0ED73243D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserGame.DataAccess", "..\BrowserGame.DataAccess\BrowserGame.DataAccess.csproj", "{BFC8B530-0DA5-433A-BF86-D27CC10FFE81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrowserGame.DataAccess", "..\BrowserGame.DataAccess\BrowserGame.DataAccess.csproj", "{BFC8B530-0DA5-433A-BF86-D27CC10FFE81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserGame.BusinessLayer", "..\BrowserGame.BusinessLayer\BrowserGame.BusinessLayer.csproj", "{9AD593A6-41A4-4E77-BF19-03F2A1630D3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{BFC8B530-0DA5-433A-BF86-D27CC10FFE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFC8B530-0DA5-433A-BF86-D27CC10FFE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFC8B530-0DA5-433A-BF86-D27CC10FFE81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AD593A6-41A4-4E77-BF19-03F2A1630D3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AD593A6-41A4-4E77-BF19-03F2A1630D3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AD593A6-41A4-4E77-BF19-03F2A1630D3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AD593A6-41A4-4E77-BF19-03F2A1630D3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

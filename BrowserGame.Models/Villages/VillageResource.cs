@@ -19,5 +19,14 @@ namespace BrowserGame.Models.Villages
 
         [ValidateNever]
         public Resource Resource { get; set; }
+
+        public int Amount { get; set; }
+
+        public DateTime LastAmountCalculation { get; set; }
+
+        public void AddAmount(int amount)
+        {
+            Amount += amount;
+        }
     }
 }
