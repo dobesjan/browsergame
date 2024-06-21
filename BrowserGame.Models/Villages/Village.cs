@@ -18,5 +18,8 @@ namespace BrowserGame.Models.Villages
 
         [ValidateNever]
         public List<VillageResourceField> VillageFields { get; set; }
+
+        [ValidateNever]
+        public List<VillageBuilding> VillageBuildings { get; set; }
     }
 }

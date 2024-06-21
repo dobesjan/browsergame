@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using BrowserGame.Models.Villages;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,5 +22,8 @@ namespace BrowserGame.Models.Buildings
 
         [ValidateNever]
         public List<BuildingEffect> BuildingEffects { get; set; }
+
+        [ValidateNever]
+        public List<VillageBuilding> VillageBuildings { get; set; }
     }
 }

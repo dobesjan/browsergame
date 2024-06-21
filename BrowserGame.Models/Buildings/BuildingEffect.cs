@@ -21,6 +21,15 @@ namespace BrowserGame.Models.Buildings
         [ValidateNever]
         public Effect Effect { get; set; }
 
-        public int Value { get; set; }
+        public double StartingValue { get; set; }
+
+        public double Coefficient { get; set; }
+
+        public double GetValue(int level)
+        {
+            // Use an exponential formula to calculate the cost
+            // Cost = BaseCost * (Coefficient ^ (level - 1))
+            return (StartingValue * Math.Pow(Coefficient, level - 1));
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace BrowserGame.DataAccess.Data
 
         #region Village
         public DbSet<Village> Villages { get; set; }
+        public DbSet<VillageBuilding> VillageBuildings { get; set; }
         public DbSet<VillageResource> VillageResources { get; set; }
         public DbSet<VillageResourceField> VillageResourceFields { get; set; }
         #endregion
@@ -93,6 +94,19 @@ namespace BrowserGame.DataAccess.Data
                 .HasOne(pc => pc.Effect)
                 .WithMany(c => c.BuildingEffects)
                 .HasForeignKey(pc => pc.EffectId);
+
+            modelBuilder.Entity<VillageBuilding>()
+                .HasKey(pc => new { pc.BuildingId, pc.VillageId });
+
+            modelBuilder.Entity<VillageBuilding>()
+                .HasOne(pc => pc.Building)
+                .WithMany(p => p.VillageBuildings)
+                .HasForeignKey(pc => pc.BuildingId);
+
+            modelBuilder.Entity<VillageBuilding>()
+                .HasOne(pc => pc.Village)
+                .WithMany(c => c.VillageBuildings)
+                .HasForeignKey(pc => pc.VillageId);
         }
     }
 }

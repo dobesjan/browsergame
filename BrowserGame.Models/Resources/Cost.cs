@@ -10,8 +10,13 @@ namespace BrowserGame.Models.Resources
     {
         public int BaseCost { get; set; }
 
-        public int Coefficient { get; set; }
+        public double Coefficient { get; set; }
 
-        //TODO: Consider cost equation for general purposes
+        public int GetCost(int level)
+        {
+            // Use an exponential formula to calculate the cost
+            // Cost = BaseCost * (Coefficient ^ (level - 1))
+            return (int)(BaseCost * Math.Pow(Coefficient, level - 1));
+        }
     }
 }
