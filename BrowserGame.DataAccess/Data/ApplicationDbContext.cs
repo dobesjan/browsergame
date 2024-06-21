@@ -1,4 +1,5 @@
-﻿using BrowserGame.Models.Resources;
+﻿using BrowserGame.Models.Buildings;
+using BrowserGame.Models.Resources;
 using BrowserGame.Models.Users;
 using BrowserGame.Models.Villages;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ namespace BrowserGame.DataAccess.Data
         #region Resources
         public DbSet<Resource> Resources { get; set; }
         public DbSet<ResourceField> ResourceFields { get; set; }
+        public DbSet<Effect> Effects { get; set; }
         #endregion
 
         #region Players
@@ -27,6 +29,12 @@ namespace BrowserGame.DataAccess.Data
         public DbSet<Village> Villages { get; set; }
         public DbSet<VillageResource> VillageResources { get; set; }
         public DbSet<VillageResourceField> VillageResourceFields { get; set; }
+        #endregion
+
+        #region Building
+        public DbSet<Building> Buildings { get; set; }
+        public DbSet<BuildingEffect> BuildingsEffects { get; set; }
+        public DbSet<BuildingResource> BuildingsResource { get; set; }
         #endregion
         #endregion
 
@@ -59,6 +67,32 @@ namespace BrowserGame.DataAccess.Data
                 .HasOne(pc => pc.ResourceField)
                 .WithMany(c => c.VillageFields)
                 .HasForeignKey(pc => pc.ResourceFieldId);
+
+            modelBuilder.Entity<BuildingResource>()
+                .HasKey(pc => new { pc.BuildingId, pc.ResourceId });
+
+            modelBuilder.Entity<BuildingResource>()
+                .HasOne(pc => pc.Building)
+                .WithMany(p => p.BuildingResources)
+                .HasForeignKey(pc => pc.BuildingId);
+
+            modelBuilder.Entity<BuildingResource>()
+                .HasOne(pc => pc.Resource)
+                .WithMany(c => c.BuildingResources)
+                .HasForeignKey(pc => pc.ResourceId);
+
+            modelBuilder.Entity<BuildingEffect>()
+                .HasKey(pc => new { pc.BuildingId, pc.EffectId });
+
+            modelBuilder.Entity<BuildingEffect>()
+                .HasOne(pc => pc.Building)
+                .WithMany(p => p.BuildingEffects)
+                .HasForeignKey(pc => pc.BuildingId);
+
+            modelBuilder.Entity<BuildingEffect>()
+                .HasOne(pc => pc.Effect)
+                .WithMany(c => c.BuildingEffects)
+                .HasForeignKey(pc => pc.EffectId);
         }
     }
 }

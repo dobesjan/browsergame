@@ -22,6 +22,8 @@ namespace BrowserGame.BusinessLayer.Resources
             _logger = logger;
         }
 
+        //TODO: Consider production calculation flow
+        // What to do when building is ranked up?
         public void CalculateProductionForVillage(int villageId)
         {
             var village = _unitOfWork.VillageRepository.Get(villageId);

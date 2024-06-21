@@ -1,5 +1,4 @@
 ﻿using BrowserGame.Models.Buildings;
-using BrowserGame.Models.Villages;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
@@ -10,17 +9,15 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.Models.Resources
 {
-    public class Resource : Entity
+    public class Effect : Entity
     {
         [Required]
         public string Name { get; set; }
 
-        public bool Enabled { get; set; }
+        [Required]
+        public string Description { get; set; }
 
         [ValidateNever]
-        public List<VillageResource> VillageResources { get; set; }
-
-        [ValidateNever]
-        public List<BuildingResource> BuildingResources { get; set; }
+        public List<BuildingEffect> BuildingEffects { get; set; }
     }
 }
