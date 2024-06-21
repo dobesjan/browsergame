@@ -1,5 +1,6 @@
 using Auth0.AspNetCore.Authentication;
 using BrowserGame.BusinessLayer.Resources;
+using BrowserGame.BusinessLayer.Villages;
 using BrowserGame.DataAccess.Data;
 using BrowserGame.DataAccess.UnitOfWork;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -30,7 +31,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-//builder.Services.AddScoped<IResourceService, ResourceService>();
+builder.Services.AddScoped<IGameResourceService, GameResourceService>();
+builder.Services.AddScoped<IBuildingService, BuildingService>();
+builder.Services.AddScoped<IVillageService, VillageService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

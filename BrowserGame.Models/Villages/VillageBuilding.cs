@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.Models.Villages
 {
-    public class VillageBuilding : Entity
+    public class VillageBuilding : VillageBuildingBase
     {
         public int VillageId { get; set; }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,5 +22,9 @@ namespace BrowserGame.Models.Villages
 
         [ValidateNever]
         public List<VillageBuilding> VillageBuildings { get; set; }
+
+        [ValidateNever]
+        [InverseProperty(nameof(Village))]
+        public List<BuildQueueItem>? BuildQueueItems { get; set; }
     }
 }

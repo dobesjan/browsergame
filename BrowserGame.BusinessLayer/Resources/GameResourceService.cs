@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.BusinessLayer.Resources
 {
-    public class ResourceService : IResourceService
+    public class GameResourceService : IGameResourceService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<ResourceService> _logger;
+        private readonly ILogger<GameResourceService> _logger;
 
-        public ResourceService(IUnitOfWork unitOfWork, ILogger<ResourceService> logger) 
+        public GameResourceService(IUnitOfWork unitOfWork, ILogger<GameResourceService> logger) 
         {
             _unitOfWork = unitOfWork;
             _logger = logger;

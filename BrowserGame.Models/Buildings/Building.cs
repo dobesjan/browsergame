@@ -9,14 +9,8 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.Models.Buildings
 {
-    public class Building : Entity
+    public class Building : BuildingBase
     {
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string Description { get; set; }
-
         [ValidateNever]
         public List<BuildingResource> BuildingResources { get; set; }
 

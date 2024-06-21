@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.Models.Villages
 {
-    public class VillageResourceField
+    public class VillageResourceField : VillageBuildingBase
     {
         public int VillageId { get; set; }
 
@@ -21,7 +21,10 @@ namespace BrowserGame.Models.Villages
         [ValidateNever]
         public ResourceField ResourceField { get; set; }
 
-        public int Level { get; set; }
+        public int ResourceId { get; set; }
+
+        [ValidateNever]
+        public Resource Resource { get; set; }
 
         public int ProductionPerHour { get; set; }
 

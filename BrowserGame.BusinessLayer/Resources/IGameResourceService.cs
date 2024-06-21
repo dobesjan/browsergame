@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.BusinessLayer.Resources
 {
-    public interface IResourceService
+    public interface IGameResourceService
     {
         //Calculates production in timeframe between last calculation and now
         void CalculateProductionForVillage(int villageId);

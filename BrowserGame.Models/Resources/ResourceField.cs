@@ -1,4 +1,5 @@
-﻿using BrowserGame.Models.Villages;
+﻿using BrowserGame.Models.Buildings;
+using BrowserGame.Models.Villages;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
@@ -9,16 +10,9 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.Models.Resources
 {
-    public class ResourceField : Entity
+    public class ResourceField : BuildingBase
     {
-        [Required]
-        public string Name { get; set; }
-
-        public bool Enabled { get; set; }
-
         [ValidateNever]
         public List<VillageResourceField> VillageFields { get; set; }
-
-        public int MaxLevel { get; set; }
     }
 }

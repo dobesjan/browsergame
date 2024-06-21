@@ -26,6 +26,7 @@ namespace BrowserGame.DataAccess.Data
         #endregion
 
         #region Village
+        public DbSet<BuildQueueItem> BuildQueueItems { get; set; }
         public DbSet<Village> Villages { get; set; }
         public DbSet<VillageBuilding> VillageBuildings { get; set; }
         public DbSet<VillageResource> VillageResources { get; set; }
