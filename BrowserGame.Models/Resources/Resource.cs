@@ -17,6 +17,9 @@ namespace BrowserGame.Models.Resources
 
         public bool Enabled { get; set; }
 
+        // Amount how much of this resource will player obtain in the game start
+        public int StartingAmount { get; set; }
+
         [ValidateNever]
         public List<VillageResource> VillageResources { get; set; }
 

@@ -108,6 +108,56 @@ namespace BrowserGame.DataAccess.Data
                 .HasOne(pc => pc.Village)
                 .WithMany(c => c.VillageBuildings)
                 .HasForeignKey(pc => pc.VillageId);
+
+            modelBuilder.Entity<Resource>().HasData(
+                new Resource { Id = 1, Name = "Wood", Enabled = true, StartingAmount = 500 },
+                new Resource { Id = 2, Name = "Bricks", Enabled = true, StartingAmount = 500 },
+                new Resource { Id = 3, Name = "Iron", Enabled = true, StartingAmount = 500 },
+                new Resource { Id = 4, Name = "Grain", Enabled = true, StartingAmount = 500 },
+                new Resource { Id = 5, Name = "Gold", Enabled = true, StartingAmount = 20 }
+            );
+
+            modelBuilder.Entity<Effect>().HasData(
+                new Effect { Id = 1, Name = "Build time", Description = "Description" },
+                new Effect { Id = 2, Name = "Storage capacity", Description = "Description" },
+                new Effect { Id = 3, Name = "Granary capacity", Description = "Description" }
+            );
+
+            modelBuilder.Entity<Cost>().HasData(
+                new Cost { Id = 1, BaseCost = 50, Coefficient = 1.4 },
+                new Cost { Id = 2, BaseCost = 80, Coefficient = 1.6 },
+                new Cost { Id = 3, BaseCost = 40, Coefficient = 1.3 },
+                new Cost { Id = 4, BaseCost = 20, Coefficient = 1.2 },
+                new Cost { Id = 5, BaseCost = 30, Coefficient = 1.2 },
+                new Cost { Id = 6, BaseCost = 50, Coefficient = 1.5 },
+                new Cost { Id = 7, BaseCost = 30, Coefficient = 1.4 },
+                new Cost { Id = 8, BaseCost = 40, Coefficient = 1.1 },
+                new Cost { Id = 9, BaseCost = 30, Coefficient = 1.2 },
+                new Cost { Id = 10, BaseCost = 50, Coefficient = 1.5 },
+                new Cost { Id = 11, BaseCost = 20, Coefficient = 1.4 },
+                new Cost { Id = 12, BaseCost = 50, Coefficient = 1.4 }
+            );
+
+            modelBuilder.Entity<BuildingResource>().HasData(
+                new BuildingResource { Id = 1, BuildingId = 1, ResourceId = 1, CostId = 1 },
+                new BuildingResource { Id = 2, BuildingId = 1, ResourceId = 2, CostId = 2 },
+                new BuildingResource { Id = 3, BuildingId = 1, ResourceId = 3, CostId = 3 },
+                new BuildingResource { Id = 4, BuildingId = 1, ResourceId = 4, CostId = 4 },
+                new BuildingResource { Id = 5, BuildingId = 2, ResourceId = 1, CostId = 5 },
+                new BuildingResource { Id = 6, BuildingId = 2, ResourceId = 2, CostId = 6 },
+                new BuildingResource { Id = 7, BuildingId = 2, ResourceId = 3, CostId = 7 },
+                new BuildingResource { Id = 8, BuildingId = 2, ResourceId = 4, CostId = 8 },
+                new BuildingResource { Id = 9, BuildingId = 3, ResourceId = 1, CostId = 9 },
+                new BuildingResource { Id = 10, BuildingId = 3, ResourceId = 2, CostId = 10 },
+                new BuildingResource { Id = 11, BuildingId = 3, ResourceId = 3, CostId = 11 },
+                new BuildingResource { Id = 12, BuildingId = 3, ResourceId = 4, CostId = 12 }
+            );
+
+            modelBuilder.Entity<BuildingEffect>().HasData(
+                new BuildingEffect { Id = 1, BuildingId = 1, EffectId = 1, StartingValue = 100, Coefficient = -0.03 },
+                new BuildingEffect { Id = 2, BuildingId = 2, EffectId = 2, StartingValue = 800, Coefficient = 1.7 },
+                new BuildingEffect { Id = 3, BuildingId = 3, EffectId = 3, StartingValue = 800, Coefficient = 1.7 }
+            );
         }
     }
 }
