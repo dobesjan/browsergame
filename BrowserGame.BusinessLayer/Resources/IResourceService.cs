@@ -8,6 +8,7 @@ namespace BrowserGame.BusinessLayer.Resources
 {
     public interface IResourceService
     {
+        //Calculates production in timeframe between last calculation and now
         void CalculateProductionForVillage(int villageId);
     }
 }

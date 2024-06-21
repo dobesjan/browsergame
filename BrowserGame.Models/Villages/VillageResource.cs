@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,31 @@ namespace BrowserGame.Models.Villages
         [ValidateNever]
         public Resource Resource { get; set; }
 
-        public int Amount { get; set; }
+        public double RealAmount { get; set; }
+
+        [NotMapped]
+        public int Amount
+        {
+            get
+            {
+                return (int) Math.Floor(RealAmount);
+            }
+        }
 
         public DateTime LastAmountCalculation { get; set; }
 
-        public void AddAmount(int amount)
+        [NotMapped]
+        public TimeSpan AmountCalculationDifference
         {
-            Amount += amount;
+            get
+            {
+                return DateTime.UtcNow.Subtract(LastAmountCalculation);
+            }
+        }
+
+        public void AddAmount(double amount)
+        {
+            RealAmount += amount;
         }
     }
 }

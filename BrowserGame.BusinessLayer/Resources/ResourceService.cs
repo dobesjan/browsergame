@@ -1,6 +1,7 @@
 ﻿using BrowserGame.DataAccess.UnitOfWork;
 using BrowserGame.Models.Villages;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -48,24 +49,22 @@ namespace BrowserGame.BusinessLayer.Resources
 
             foreach (var res in village.VillageResources)
             {
-                var now = DateTime.UtcNow;
-                var diff = now.Subtract(res.LastAmountCalculation);
+                var diff = res.AmountCalculationDifference;
 
                 //TODO: Move to separate method
                 // Calculation of production per hour
                 var resourceFields = village.VillageFields.Where(f => f.ResourceFieldId == res.ResourceId).ToList();
-                int productionPerHour = 0;
+                double productionPerSecond = 0;
                 foreach (var field in resourceFields)
                 {
-                    productionPerHour += field.ProductionPerHour;
+                    productionPerSecond += field.RealProductionPerSecond;
                 }
 
                 // Calculation of real production
                 //TODO: COnsider move as well
-                var ticks = diff.Ticks;
-                long prop = (long)productionPerHour;
-                int produced = (int) (prop / ticks);
-                res.AddAmount(produced);
+                int seconds = diff.Seconds;
+                double realProduction = productionPerSecond * seconds;
+                res.AddAmount(realProduction);
             }
 
             _unitOfWork.VillageRepository.Update(village);

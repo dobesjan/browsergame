@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,5 +24,14 @@ namespace BrowserGame.Models.Villages
         public int Level { get; set; }
 
         public int ProductionPerHour { get; set; }
+
+        [NotMapped]
+        public double RealProductionPerSecond
+        {
+            get
+            {
+                return ProductionPerHour / 3600;
+            }
+        }
     }
 }
