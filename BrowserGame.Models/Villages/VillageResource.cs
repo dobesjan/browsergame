@@ -43,9 +43,9 @@ namespace BrowserGame.Models.Villages
             }
         }
 
-        public void AddAmount(double amount)
+        public void AddAmount(double amount, double capacity)
         {
-            RealAmount += amount;
+            RealAmount = Math.Min(RealAmount + amount, capacity);
         }
     }
 }

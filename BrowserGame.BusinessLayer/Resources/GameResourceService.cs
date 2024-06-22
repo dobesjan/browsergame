@@ -1,4 +1,5 @@
-﻿using BrowserGame.DataAccess.UnitOfWork;
+﻿using BrowserGame.BusinessLayer.Villages;
+using BrowserGame.DataAccess.UnitOfWork;
 using BrowserGame.Models.Villages;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -14,11 +15,13 @@ namespace BrowserGame.BusinessLayer.Resources
     public class GameResourceService : IGameResourceService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IVillageService _villageService;
         private readonly ILogger<GameResourceService> _logger;
 
-        public GameResourceService(IUnitOfWork unitOfWork, ILogger<GameResourceService> logger) 
+        public GameResourceService(IUnitOfWork unitOfWork, IVillageService villageService, ILogger<GameResourceService> logger) 
         {
             _unitOfWork = unitOfWork;
+            _villageService = villageService;
             _logger = logger;
         }
 
@@ -62,11 +65,13 @@ namespace BrowserGame.BusinessLayer.Resources
                     productionPerSecond += field.RealProductionPerSecond;
                 }
 
+                var resourceCapacity = _villageService.GetEffectValue(villageId, res.Resource.EffectId);
+
                 // Calculation of real production
                 //TODO: COnsider move as well
                 int seconds = diff.Seconds;
                 double realProduction = productionPerSecond * seconds;
-                res.AddAmount(realProduction);
+                res.AddAmount(realProduction, resourceCapacity);
             }
 
             _unitOfWork.VillageRepository.Update(village);

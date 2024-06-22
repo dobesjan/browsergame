@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace BrowserGame.Models.Resources
 {
+    //TODO: Consider if needed
+    public enum EffectType
+    {
+        BuildTime = 1,
+        StorageCapacity = 2,
+        GranaryCapacity = 3
+    }
+
     public class Effect : Entity
     {
         [Required]

@@ -21,11 +21,6 @@ namespace BrowserGame.Models.Villages
         [ValidateNever]
         public ResourceField ResourceField { get; set; }
 
-        public int ResourceId { get; set; }
-
-        [ValidateNever]
-        public Resource Resource { get; set; }
-
         public int ProductionPerHour { get; set; }
 
         [NotMapped]
