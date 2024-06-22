@@ -1,6 +1,7 @@
 ﻿using BrowserGame.BusinessLayer.Villages;
 using BrowserGame.DataAccess.UnitOfWork;
 using BrowserGame.Models.Villages;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using System;
@@ -56,16 +57,14 @@ namespace BrowserGame.BusinessLayer.Resources
             {
                 var diff = res.AmountCalculationDifference;
 
-                //TODO: Move to separate method
+                //TODO: Consider move to separate method
                 // Calculation of production per hour
                 var resourceFields = village.VillageFields.Where(f => f.ResourceFieldId == res.ResourceId).ToList();
                 double productionPerSecond = 0;
-                foreach (var field in resourceFields)
-                {
-                    productionPerSecond += field.RealProductionPerSecond;
-                }
+                productionPerSecond = resourceFields.Sum(rf => rf.RealProductionPerSecond);
 
-                var resourceCapacity = _villageService.GetEffectValue(villageId, res.Resource.EffectId);
+                // TODO: Make this variable configurable
+                var resourceCapacity = 1000 + _villageService.GetEffectValue(villageId, res.Resource.EffectId);
 
                 // Calculation of real production
                 //TODO: COnsider move as well
