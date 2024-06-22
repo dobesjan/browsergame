@@ -33,5 +33,8 @@ namespace BrowserGame.Models.Resources
 
         [ValidateNever]
         public List<BuildingResource> BuildingResources { get; set; }
+
+        [ValidateNever]
+        public List<ResourceFieldResource> ResourceFieldResources { get; set; }
     }
 }

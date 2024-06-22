@@ -62,7 +62,7 @@ namespace BrowserGame.Controllers
         [Authorize]
         public IActionResult Callback(string returnUrl = "/")
         {
-            if (User != null && !User.Claims.IsNullOrEmpty())
+            if (User != null && !User.Claims.IsNullOrEmpty() && User.Identity != null)
             {
                 var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 var player = _unitOfWork.PlayerRepository.GetByUserId(userId);
@@ -70,7 +70,8 @@ namespace BrowserGame.Controllers
                 {
                     player = new Player
                     {
-                        UserId = userId
+                        UserId = userId,
+                        Name = User.Identity?.Name,
                     };
 
                     _unitOfWork.PlayerRepository.Add(player);

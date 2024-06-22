@@ -9,5 +9,7 @@ namespace BrowserGame.Models.Users
     public class Player : Entity
     {
         public string UserId { get; set; }
+
+        public string Name { get; set; }
     }
 }

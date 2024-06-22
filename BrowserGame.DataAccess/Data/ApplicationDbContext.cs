@@ -18,6 +18,7 @@ namespace BrowserGame.DataAccess.Data
         #region Resources
         public DbSet<Resource> Resources { get; set; }
         public DbSet<ResourceField> ResourceFields { get; set; }
+        public DbSet<ResourceFieldResource> ResourceFieldsResource { get; set; }
         public DbSet<Effect> Effects { get; set; }
         #endregion
 
@@ -109,6 +110,19 @@ namespace BrowserGame.DataAccess.Data
                 .WithMany(c => c.VillageBuildings)
                 .HasForeignKey(pc => pc.VillageId);
 
+            modelBuilder.Entity<ResourceFieldResource>()
+                .HasKey(pc => new { pc.ResourceFieldId, pc.ResourceId });
+
+            modelBuilder.Entity<ResourceFieldResource>()
+                .HasOne(pc => pc.ResourceField)
+                .WithMany(p => p.ResourceFieldResources)
+                .HasForeignKey(pc => pc.ResourceFieldId);
+
+            modelBuilder.Entity<ResourceFieldResource>()
+                .HasOne(pc => pc.Resource)
+                .WithMany(c => c.ResourceFieldResources)
+                .HasForeignKey(pc => pc.ResourceId);
+
             modelBuilder.Entity<Resource>().HasData(
                 new Resource { Id = 1, Name = "Wood", Enabled = true, StartingAmount = 500, EffectId = 2 },
                 new Resource { Id = 2, Name = "Bricks", Enabled = true, StartingAmount = 500, EffectId = 2 },
@@ -154,7 +168,42 @@ namespace BrowserGame.DataAccess.Data
                 new Cost { Id = 13, BaseCost = 1000, Coefficient = 1.2 },
                 new Cost { Id = 14, BaseCost = 1200, Coefficient = 1.5 },
                 new Cost { Id = 15, BaseCost = 1500, Coefficient = 1.4 },
-                new Cost { Id = 16, BaseCost = 300, Coefficient = 1.4 }
+                new Cost { Id = 16, BaseCost = 300, Coefficient = 1.4 },
+                new Cost { Id = 17, BaseCost = 10, Coefficient = 1.2 },
+                new Cost { Id = 18, BaseCost = 30, Coefficient = 1.5 },
+                new Cost { Id = 19, BaseCost = 50, Coefficient = 1.4 },
+                new Cost { Id = 20, BaseCost = 20, Coefficient = 1.6 },
+                new Cost { Id = 21, BaseCost = 25, Coefficient = 1.2 },
+                new Cost { Id = 22, BaseCost = 30, Coefficient = 1.8 },
+                new Cost { Id = 23, BaseCost = 80, Coefficient = 1.1 },
+                new Cost { Id = 24, BaseCost = 90, Coefficient = 1.4 },
+                new Cost { Id = 25, BaseCost = 50, Coefficient = 1.6 },
+                new Cost { Id = 26, BaseCost = 60, Coefficient = 1.5 },
+                new Cost { Id = 27, BaseCost = 90, Coefficient = 1.2 },
+                new Cost { Id = 28, BaseCost = 30, Coefficient = 1.3 },
+                new Cost { Id = 29, BaseCost = 35, Coefficient = 1.7 },
+                new Cost { Id = 30, BaseCost = 38, Coefficient = 1.2 },
+                new Cost { Id = 31, BaseCost = 35, Coefficient = 1.3 },
+                new Cost { Id = 32, BaseCost = 45, Coefficient = 1.4 }
+            );
+
+            modelBuilder.Entity<ResourceFieldResource>().HasData(
+                new ResourceFieldResource { Id = 1, ResourceFieldId = 1, ResourceId = 1, CostId = 17 },
+                new ResourceFieldResource { Id = 2, ResourceFieldId = 1, ResourceId = 2, CostId = 18 },
+                new ResourceFieldResource { Id = 3, ResourceFieldId = 1, ResourceId = 3, CostId = 19 },
+                new ResourceFieldResource { Id = 4, ResourceFieldId = 1, ResourceId = 4, CostId = 20 },
+                new ResourceFieldResource { Id = 5, ResourceFieldId = 2, ResourceId = 1, CostId = 21 },
+                new ResourceFieldResource { Id = 6, ResourceFieldId = 2, ResourceId = 2, CostId = 22 },
+                new ResourceFieldResource { Id = 7, ResourceFieldId = 2, ResourceId = 3, CostId = 23 },
+                new ResourceFieldResource { Id = 8, ResourceFieldId = 2, ResourceId = 4, CostId = 24 },
+                new ResourceFieldResource { Id = 9, ResourceFieldId = 3, ResourceId = 1, CostId = 25 },
+                new ResourceFieldResource { Id = 10, ResourceFieldId = 3, ResourceId = 2, CostId = 26 },
+                new ResourceFieldResource { Id = 11, ResourceFieldId = 3, ResourceId = 3, CostId = 27 },
+                new ResourceFieldResource { Id = 12, ResourceFieldId = 3, ResourceId = 4, CostId = 28 },
+                new ResourceFieldResource { Id = 13, ResourceFieldId = 4, ResourceId = 1, CostId = 29 },
+                new ResourceFieldResource { Id = 14, ResourceFieldId = 4, ResourceId = 2, CostId = 30 },
+                new ResourceFieldResource { Id = 15, ResourceFieldId = 4, ResourceId = 3, CostId = 31 },
+                new ResourceFieldResource { Id = 16, ResourceFieldId = 4, ResourceId = 4, CostId = 32 }
             );
 
             modelBuilder.Entity<BuildingResource>().HasData(

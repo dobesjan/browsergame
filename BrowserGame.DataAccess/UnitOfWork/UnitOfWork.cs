@@ -1,4 +1,5 @@
 ﻿using BrowserGame.DataAccess.Data;
+using BrowserGame.DataAccess.Repository.Resources;
 using BrowserGame.DataAccess.Repository.Users;
 using BrowserGame.DataAccess.Repository.Villages;
 using System;
@@ -15,6 +16,10 @@ namespace BrowserGame.DataAccess.UnitOfWork
 
         public IPlayerRepository PlayerRepository { get; }
         public IVillageRepository VillageRepository { get; }
+        public IResourceRepository ResourceRepository { get; }
+        public IVillageResourceRepository VillageResourceRepository { get; }
+        public IResourceFieldRepository ResourceFieldRepository { get; }
+        public IVillageResourceFieldRepository VillageResourceFieldRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -22,6 +27,10 @@ namespace BrowserGame.DataAccess.UnitOfWork
 
             PlayerRepository = new PlayerRepository(context);
             VillageRepository = new VillageRepository(context);
+            ResourceRepository = new ResourceRepository(context);
+            VillageResourceRepository = new VillageResourceRepository(context);
+            ResourceFieldRepository = new ResourceFieldRepository(context);
+            VillageResourceFieldRepository = new VillageResourceFieldRepository(context);
         }
     }
 }

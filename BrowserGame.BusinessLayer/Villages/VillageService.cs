@@ -1,4 +1,5 @@
 ﻿using BrowserGame.DataAccess.UnitOfWork;
+using BrowserGame.Models.Villages;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,60 @@ namespace BrowserGame.BusinessLayer.Villages
 
         public void CreateVillage(int playerId)
         {
-            // Get player and check if exists
+            var player = _unitOfWork.PlayerRepository.Get(playerId);
+            if (player != null) 
+            {
+                var message = $"Player with id '{playerId}' not found.";
+                _logger.LogError(message);
+                throw new ArgumentNullException(message);
+            }
 
             // Initialize location - maybe later when map will be implemented
 
             // Initialize start resources
+            var village = new Village
+            {
+                Name = player.Name
+            };
+
+            _unitOfWork.VillageRepository.Add(village);
+            _unitOfWork.VillageRepository.Save();
+
+            var resources = _unitOfWork.ResourceRepository.GetResources(true);
+
+            foreach (var resource in resources)
+            {
+                var villageResource = new VillageResource
+                {
+                    VillageId = village.Id,
+                    ResourceId = resource.Id,
+                    RealAmount = resource.StartingAmount,
+                    LastAmountCalculation = DateTime.UtcNow,
+                };
+
+                _unitOfWork.VillageResourceRepository.Add(villageResource);
+            }
+
+            _unitOfWork.VillageResourceRepository.Save();
 
             // Intialize fields
+            var resourceFields = _unitOfWork.ResourceFieldRepository.GetResourceFields(true);
+
+            foreach (var field in resourceFields)
+            {
+                //TODO: Resolve production per hour
+                //TODO: Consider village resource matrix
+                var villageResourceField = new VillageResourceField
+                {
+                    VillageId = village.Id,
+                    ResourceFieldId = field.Id,
+                    ProductionPerHour = 10
+                };
+
+                _unitOfWork.VillageResourceFieldRepository.Add(villageResourceField);
+            }
+
+            _unitOfWork.VillageResourceFieldRepository.Save();
 
             // Initialize buildings
         }
