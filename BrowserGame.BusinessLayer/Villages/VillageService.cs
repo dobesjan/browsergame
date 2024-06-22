@@ -46,8 +46,6 @@ namespace BrowserGame.BusinessLayer.Villages
 
             _resourceService.InitVillageResources(village.Id);
             _resourceService.InitResourceFields(village.Id);
-
-            // Initialize buildings
         }
 
         public double GetEffectValue(int villageId, int effectId)

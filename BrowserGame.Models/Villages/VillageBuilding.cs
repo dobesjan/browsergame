@@ -20,5 +20,7 @@ namespace BrowserGame.Models.Villages
 
         [ValidateNever]
         public Building Building { get; set; }
+
+        public int SlotId { get; set; }
     }
 }

@@ -15,13 +15,13 @@ namespace BrowserGame.Models.Villages
         public string Name { get; set; }
 
         [ValidateNever]
-        public List<VillageResource> VillageResources { get; set; }
+        public List<VillageResource>? VillageResources { get; set; }
 
         [ValidateNever]
-        public List<VillageResourceField> VillageFields { get; set; }
+        public List<VillageResourceField>? VillageFields { get; set; }
 
         [ValidateNever]
-        public List<VillageBuilding> VillageBuildings { get; set; }
+        public List<VillageBuilding>? VillageBuildings { get; set; }
 
         [ValidateNever]
         [InverseProperty(nameof(Village))]
