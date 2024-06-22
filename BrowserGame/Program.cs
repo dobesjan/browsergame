@@ -1,4 +1,5 @@
 using Auth0.AspNetCore.Authentication;
+using BrowserGame.BusinessLayer.Effects;
 using BrowserGame.BusinessLayer.Resources;
 using BrowserGame.BusinessLayer.Villages;
 using BrowserGame.DataAccess.Data;
@@ -34,6 +35,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IGameResourceService, GameResourceService>();
 builder.Services.AddScoped<IBuildingService, BuildingService>();
 builder.Services.AddScoped<IVillageService, VillageService>();
+builder.Services.AddScoped<IEffectService, EffectService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
