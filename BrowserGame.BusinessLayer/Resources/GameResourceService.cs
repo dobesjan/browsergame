@@ -26,6 +26,47 @@ namespace BrowserGame.BusinessLayer.Resources
             _logger = logger;
         }
 
+        public void InitVillageResources(int villageId)
+        {
+            var resources = _unitOfWork.ResourceRepository.GetResources(true);
+
+            foreach (var resource in resources)
+            {
+                var villageResource = new VillageResource
+                {
+                    VillageId = villageId,
+                    ResourceId = resource.Id,
+                    RealAmount = resource.StartingAmount,
+                    LastAmountCalculation = DateTime.UtcNow,
+                };
+
+                _unitOfWork.VillageResourceRepository.Add(villageResource);
+            }
+
+            _unitOfWork.VillageResourceRepository.Save();
+        }
+
+        public void InitResourceFields(int villageId)
+        {
+            var resourceFields = _unitOfWork.ResourceFieldRepository.GetResourceFields(true);
+
+            foreach (var field in resourceFields)
+            {
+                //TODO: Resolve production per hour
+                //TODO: Consider village resource matrix
+                var villageResourceField = new VillageResourceField
+                {
+                    VillageId = villageId,
+                    ResourceFieldId = field.Id,
+                    ProductionPerHour = 10
+                };
+
+                _unitOfWork.VillageResourceFieldRepository.Add(villageResourceField);
+            }
+
+            _unitOfWork.VillageResourceFieldRepository.Save();
+        }
+
         //TODO: Consider production calculation flow
         // What to do when building is ranked up?
         public void CalculateProductionForVillage(int villageId)
