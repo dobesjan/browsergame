@@ -10,6 +10,7 @@ namespace BrowserGame.BusinessLayer.Villages
     public interface IVillageService
     {
         Village GetVillage(int villageId);
+        Village GetVillage(int villageId, int playerId);
         void CreateVillage(int playerId);
         double GetEffectValue(int villageId, int effectId);
     }

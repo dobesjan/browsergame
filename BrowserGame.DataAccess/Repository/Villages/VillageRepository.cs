@@ -18,5 +18,10 @@ namespace BrowserGame.DataAccess.Repository.Villages
         {
             return Get(id, includeProperties: _properties);
         }
+
+        public Village GetVillage(int villageId, int playerId)
+        {
+            return Get(v => v.Id == villageId && v.PlayerId == playerId, includeProperties: _properties);
+        }
     }
 }

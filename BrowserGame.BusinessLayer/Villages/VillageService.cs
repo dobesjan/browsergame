@@ -23,10 +23,8 @@ namespace BrowserGame.BusinessLayer.Villages
             _resourceService = resourceService;
         }
 
-        public Village GetVillage(int villageId)
+        private Village GetVillageInternal(Village village)
         {
-            var village = _unitOfWork.VillageRepository.GetVillage(villageId);
-
             if (village == null)
             {
                 var message = $"Village not found";
@@ -35,6 +33,18 @@ namespace BrowserGame.BusinessLayer.Villages
             }
 
             return village;
+        }
+
+        public Village GetVillage(int villageId)
+        {
+            var village = _unitOfWork.VillageRepository.GetVillage(villageId);
+            return GetVillageInternal(village);
+        }
+
+        public Village GetVillage(int villageId, int playerId)
+        {
+            var village = _unitOfWork.VillageRepository.GetVillage(villageId, playerId);
+            return GetVillageInternal(village);
         }
 
         public void CreateVillage(int playerId)
@@ -52,7 +62,8 @@ namespace BrowserGame.BusinessLayer.Villages
             // Initialize start resources
             var village = new Village
             {
-                Name = player.Name
+                Name = player.Name,
+                PlayerId = playerId
             };
 
             _unitOfWork.VillageRepository.Add(village);

@@ -10,5 +10,6 @@ namespace BrowserGame.DataAccess.Repository.Villages
     public interface IVillageRepository : IRepository<Village>
     {
         Village GetVillage(int id);
+        Village GetVillage(int villageId, int playerId);
     }
 }

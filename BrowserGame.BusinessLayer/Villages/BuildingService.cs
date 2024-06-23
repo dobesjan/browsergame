@@ -33,6 +33,8 @@ namespace BrowserGame.BusinessLayer.Villages
 
         public void AddBuildOrder(Village village, int slotId, int buildingId)
         {
+            // TODO: Refactor it to work with slots as well
+
             // TODO: Make slot range configurable
             if (slotId < 0 || slotId > 20) throw new InvalidDataException($"Wrong slot with id '{slotId}'");
 

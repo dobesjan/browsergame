@@ -14,11 +14,9 @@ namespace BrowserGame.Controllers
 {
     public class AccountController : BrowserBaseController
     {
-        private readonly IVillageService _villageService;
-
-        public AccountController(ILogger<AccountController> logger, IUnitOfWork unitOfWork, IVillageService villageService) : base(logger, unitOfWork) 
+        public AccountController(ILogger<AccountController> logger, IUnitOfWork unitOfWork, IVillageService villageService) : base(logger, unitOfWork, villageService)
         {
-            _villageService = villageService;
+
         }
 
         public async Task Login(string returnUrl = "/")

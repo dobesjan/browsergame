@@ -14,6 +14,9 @@ namespace BrowserGame.Models.Villages
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public int PlayerId { get; set; }
+
         [ValidateNever]
         public List<VillageResource>? VillageResources { get; set; }
 
