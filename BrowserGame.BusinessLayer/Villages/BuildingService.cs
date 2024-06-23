@@ -97,30 +97,6 @@ namespace BrowserGame.BusinessLayer.Villages
             _unitOfWork.BuildQueueItemRepository.Save();
         }
 
-        public void AddLevelUpOrder(int villageId, int villageBuilding)
-        {
-            //TODO: Consider how to deal with slots
-
-            // Get VillageBuilding by slot id
-
-            // Check if village has enough resources
-
-            // Check if build queue is not full
-
-            // Add to build queue
-        }
-
-        public void AddLevelUpResourceFieldOrder(int villageId, int villageResourceFieldId)
-        {
-            // Get resource field by id
-
-            // Check if village has enough resources
-
-            // Check if build queue is not full
-
-            // Add to build queue
-        }
-
         public bool CheckAndUpdateBuildProcess(int villageId)
         {
             var village = _villageService.GetVillage(villageId);

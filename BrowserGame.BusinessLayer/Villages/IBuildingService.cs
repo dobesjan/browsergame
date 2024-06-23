@@ -11,8 +11,6 @@ namespace BrowserGame.BusinessLayer.Villages
     {
         void AddBuildOrder(int villageId, int slotId, int buildingId);
         void AddBuildOrder(Village village, int slotId, int buildingId);
-        void AddLevelUpOrder(int villageId, int villageBuilding);
-        void AddLevelUpResourceFieldOrder(int villageId, int villageResourceFieldId);
         bool CheckAndUpdateBuildProcess(int villageId);
         bool CheckAndUpdateBuildProcess(Village village);
     }
