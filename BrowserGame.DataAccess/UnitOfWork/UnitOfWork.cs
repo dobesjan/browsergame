@@ -1,4 +1,5 @@
 ﻿using BrowserGame.DataAccess.Data;
+using BrowserGame.DataAccess.Repository.Buildings;
 using BrowserGame.DataAccess.Repository.Resources;
 using BrowserGame.DataAccess.Repository.Users;
 using BrowserGame.DataAccess.Repository.Villages;
@@ -20,6 +21,9 @@ namespace BrowserGame.DataAccess.UnitOfWork
         public IVillageResourceRepository VillageResourceRepository { get; }
         public IResourceFieldRepository ResourceFieldRepository { get; }
         public IVillageResourceFieldRepository VillageResourceFieldRepository { get; }
+        public IVillageBuildingRepository VillageBuildingRepository { get; }
+        public IBuildQueueItemRepository BuildQueueItemRepository { get; }
+        public IBuildingRepository BuildingRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -31,6 +35,9 @@ namespace BrowserGame.DataAccess.UnitOfWork
             VillageResourceRepository = new VillageResourceRepository(context);
             ResourceFieldRepository = new ResourceFieldRepository(context);
             VillageResourceFieldRepository = new VillageResourceFieldRepository(context);
+            VillageBuildingRepository = new VillageBuildingRepository(context);
+            BuildQueueItemRepository = new BuildQueueItemRepository(context);
+            BuildingRepository = new BuildingRepository(context);
         }
     }
 }

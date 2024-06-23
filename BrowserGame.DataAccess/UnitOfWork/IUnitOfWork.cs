@@ -1,4 +1,5 @@
-﻿using BrowserGame.DataAccess.Repository.Resources;
+﻿using BrowserGame.DataAccess.Repository.Buildings;
+using BrowserGame.DataAccess.Repository.Resources;
 using BrowserGame.DataAccess.Repository.Users;
 using BrowserGame.DataAccess.Repository.Villages;
 using System;
@@ -17,5 +18,8 @@ namespace BrowserGame.DataAccess.UnitOfWork
         IVillageResourceRepository VillageResourceRepository { get; }
         IResourceFieldRepository ResourceFieldRepository { get; }
         IVillageResourceFieldRepository VillageResourceFieldRepository { get; }
+        IVillageBuildingRepository VillageBuildingRepository { get; }
+        IBuildQueueItemRepository BuildQueueItemRepository { get; }
+        IBuildingRepository BuildingRepository { get; }
     }
 }

@@ -23,6 +23,20 @@ namespace BrowserGame.BusinessLayer.Villages
             _resourceService = resourceService;
         }
 
+        public Village GetVillage(int villageId)
+        {
+            var village = _unitOfWork.VillageRepository.GetVillage(villageId);
+
+            if (village == null)
+            {
+                var message = $"Village not found";
+                _logger.LogError(message);
+                throw new ArgumentNullException(message);
+            }
+
+            return village;
+        }
+
         public void CreateVillage(int playerId)
         {
             var player = _unitOfWork.PlayerRepository.Get(playerId);
@@ -50,14 +64,7 @@ namespace BrowserGame.BusinessLayer.Villages
 
         public double GetEffectValue(int villageId, int effectId)
         {
-            var village = _unitOfWork.VillageRepository.GetVillage(villageId);
-
-            if (village == null)
-            {
-                var message = $"Village not found";
-                _logger.LogError(message);
-                throw new ArgumentNullException(message);
-            }
+            var village = GetVillage(villageId);
 
             double effectValue = 0;
 

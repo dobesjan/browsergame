@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BrowserGame.Models.Buildings;
+using BrowserGame.Models.Villages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +15,8 @@ namespace BrowserGame.BusinessLayer.Resources
 
         //Calculates production in timeframe between last calculation and now
         void CalculateProductionForVillage(int villageId);
+
+        bool HasEnoughResources(int villageId, int level, int buildingId);
+        bool HasEnoughResources(Village village, int level, int buildingId);
     }
 }

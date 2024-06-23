@@ -35,6 +35,13 @@ namespace BrowserGame.Models.Villages
 
         public DateTime BuildEnd { get; set; }
 
+        public int BuildOrder { get; set; }
+
         public int TargetLevel { get; set; }
+
+        public bool IsBuildFinished()
+        {
+            return DateTime.UtcNow >= BuildEnd;
+        }
     }
 }

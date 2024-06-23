@@ -117,5 +117,28 @@ namespace BrowserGame.BusinessLayer.Resources
             _unitOfWork.VillageRepository.Update(village);
             _unitOfWork.VillageRepository.Save();
         }
+
+        public bool HasEnoughResources(int villageId, int level, int buildingId)
+        {
+            var village = _villageService.GetVillage(villageId);
+            return HasEnoughResources(village, level, buildingId);
+        }
+
+        public bool HasEnoughResources(Village village, int level, int buildingId)
+        {
+            var building = _unitOfWork.BuildingRepository.Get(buildingId);
+            if (building == null) throw new InvalidDataException("Building not found");
+
+            foreach (var resource in village.VillageResources)
+            {
+                foreach (var buildingResource in building.BuildingResources)
+                {
+                    if (resource.Amount < buildingResource.Cost.GetCost(level)) return false;
+                }
+
+            }
+
+            return false;
+        }
     }
 }
