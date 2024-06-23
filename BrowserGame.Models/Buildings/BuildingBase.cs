@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,6 +23,9 @@ namespace BrowserGame.Models.Buildings
         public int BaseBuildDuration { get; set; }
 
         public double BuildCoefficient { get; set; }
+
+        [ValidateNever]
+        public List<BuildingResource> BuildingResources { get; set; }
 
         public int GetBuildDuration(int level)
         {

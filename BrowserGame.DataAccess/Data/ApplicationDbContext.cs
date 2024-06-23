@@ -72,12 +72,12 @@ namespace BrowserGame.DataAccess.Data
                 .HasForeignKey(pc => pc.ResourceFieldId);
 
             modelBuilder.Entity<BuildingResource>()
-                .HasKey(pc => new { pc.BuildingId, pc.ResourceId });
+                .HasKey(pc => new { pc.BuildingBaseId, pc.ResourceId });
 
             modelBuilder.Entity<BuildingResource>()
                 .HasOne(pc => pc.Building)
                 .WithMany(p => p.BuildingResources)
-                .HasForeignKey(pc => pc.BuildingId);
+                .HasForeignKey(pc => pc.BuildingBaseId);
 
             modelBuilder.Entity<BuildingResource>()
                 .HasOne(pc => pc.Resource)
@@ -110,19 +110,6 @@ namespace BrowserGame.DataAccess.Data
                 .WithMany(c => c.VillageBuildings)
                 .HasForeignKey(pc => pc.VillageId);
 
-            modelBuilder.Entity<ResourceFieldResource>()
-                .HasKey(pc => new { pc.ResourceFieldId, pc.ResourceId });
-
-            modelBuilder.Entity<ResourceFieldResource>()
-                .HasOne(pc => pc.ResourceField)
-                .WithMany(p => p.ResourceFieldResources)
-                .HasForeignKey(pc => pc.ResourceFieldId);
-
-            modelBuilder.Entity<ResourceFieldResource>()
-                .HasOne(pc => pc.Resource)
-                .WithMany(c => c.ResourceFieldResources)
-                .HasForeignKey(pc => pc.ResourceId);
-
             modelBuilder.Entity<Resource>().HasData(
                 new Resource { Id = 1, Name = "Wood", Enabled = true, StartingAmount = 500, EffectId = 2 },
                 new Resource { Id = 2, Name = "Bricks", Enabled = true, StartingAmount = 500, EffectId = 2 },
@@ -132,10 +119,10 @@ namespace BrowserGame.DataAccess.Data
             );
 
             modelBuilder.Entity<ResourceField>().HasData(
-                new ResourceField { Id = 1, Name = "Forest", Description = "Description", Enabled = true, ResourceId = 1, MaxLevel = 50, BaseBuildDuration = 10, BuildCoefficient = 1.7 },
-                new ResourceField { Id = 2, Name = "Clay", Description = "Description", Enabled = true, ResourceId = 2, MaxLevel = 50, BaseBuildDuration = 12, BuildCoefficient = 1.5 },
-                new ResourceField { Id = 3, Name = "Iron mine", Description = "Description", Enabled = true, ResourceId = 3, MaxLevel = 50, BaseBuildDuration = 20, BuildCoefficient = 1.4 },
-                new ResourceField { Id = 4, Name = "Grain field", Description = "Description", Enabled = true, ResourceId = 4, MaxLevel = 50, BaseBuildDuration = 7, BuildCoefficient = 1.3 }
+                new ResourceField { Id = 5, Name = "Forest", Description = "Description", Enabled = true, ResourceId = 1, MaxLevel = 50, BaseBuildDuration = 10, BuildCoefficient = 1.7 },
+                new ResourceField { Id = 6, Name = "Clay", Description = "Description", Enabled = true, ResourceId = 2, MaxLevel = 50, BaseBuildDuration = 12, BuildCoefficient = 1.5 },
+                new ResourceField { Id = 7, Name = "Iron mine", Description = "Description", Enabled = true, ResourceId = 3, MaxLevel = 50, BaseBuildDuration = 20, BuildCoefficient = 1.4 },
+                new ResourceField { Id = 8, Name = "Grain field", Description = "Description", Enabled = true, ResourceId = 4, MaxLevel = 50, BaseBuildDuration = 7, BuildCoefficient = 1.3 }
             );
 
             modelBuilder.Entity<Effect>().HasData(
@@ -187,42 +174,39 @@ namespace BrowserGame.DataAccess.Data
                 new Cost { Id = 32, BaseCost = 45, Coefficient = 1.4 }
             );
 
-            modelBuilder.Entity<ResourceFieldResource>().HasData(
-                new ResourceFieldResource { Id = 1, ResourceFieldId = 1, ResourceId = 1, CostId = 17 },
-                new ResourceFieldResource { Id = 2, ResourceFieldId = 1, ResourceId = 2, CostId = 18 },
-                new ResourceFieldResource { Id = 3, ResourceFieldId = 1, ResourceId = 3, CostId = 19 },
-                new ResourceFieldResource { Id = 4, ResourceFieldId = 1, ResourceId = 4, CostId = 20 },
-                new ResourceFieldResource { Id = 5, ResourceFieldId = 2, ResourceId = 1, CostId = 21 },
-                new ResourceFieldResource { Id = 6, ResourceFieldId = 2, ResourceId = 2, CostId = 22 },
-                new ResourceFieldResource { Id = 7, ResourceFieldId = 2, ResourceId = 3, CostId = 23 },
-                new ResourceFieldResource { Id = 8, ResourceFieldId = 2, ResourceId = 4, CostId = 24 },
-                new ResourceFieldResource { Id = 9, ResourceFieldId = 3, ResourceId = 1, CostId = 25 },
-                new ResourceFieldResource { Id = 10, ResourceFieldId = 3, ResourceId = 2, CostId = 26 },
-                new ResourceFieldResource { Id = 11, ResourceFieldId = 3, ResourceId = 3, CostId = 27 },
-                new ResourceFieldResource { Id = 12, ResourceFieldId = 3, ResourceId = 4, CostId = 28 },
-                new ResourceFieldResource { Id = 13, ResourceFieldId = 4, ResourceId = 1, CostId = 29 },
-                new ResourceFieldResource { Id = 14, ResourceFieldId = 4, ResourceId = 2, CostId = 30 },
-                new ResourceFieldResource { Id = 15, ResourceFieldId = 4, ResourceId = 3, CostId = 31 },
-                new ResourceFieldResource { Id = 16, ResourceFieldId = 4, ResourceId = 4, CostId = 32 }
-            );
-
             modelBuilder.Entity<BuildingResource>().HasData(
-                new BuildingResource { Id = 1, BuildingId = 1, ResourceId = 1, CostId = 1 },
-                new BuildingResource { Id = 2, BuildingId = 1, ResourceId = 2, CostId = 2 },
-                new BuildingResource { Id = 3, BuildingId = 1, ResourceId = 3, CostId = 3 },
-                new BuildingResource { Id = 4, BuildingId = 1, ResourceId = 4, CostId = 4 },
-                new BuildingResource { Id = 5, BuildingId = 2, ResourceId = 1, CostId = 5 },
-                new BuildingResource { Id = 6, BuildingId = 2, ResourceId = 2, CostId = 6 },
-                new BuildingResource { Id = 7, BuildingId = 2, ResourceId = 3, CostId = 7 },
-                new BuildingResource { Id = 8, BuildingId = 2, ResourceId = 4, CostId = 8 },
-                new BuildingResource { Id = 9, BuildingId = 3, ResourceId = 1, CostId = 9 },
-                new BuildingResource { Id = 10, BuildingId = 3, ResourceId = 2, CostId = 10 },
-                new BuildingResource { Id = 11, BuildingId = 3, ResourceId = 3, CostId = 11 },
-                new BuildingResource { Id = 12, BuildingId = 3, ResourceId = 4, CostId = 12 },
-                new BuildingResource { Id = 13, BuildingId = 4, ResourceId = 1, CostId = 13 },
-                new BuildingResource { Id = 14, BuildingId = 4, ResourceId = 2, CostId = 14 },
-                new BuildingResource { Id = 15, BuildingId = 4, ResourceId = 3, CostId = 15 },
-                new BuildingResource { Id = 16, BuildingId = 4, ResourceId = 4, CostId = 16 }
+                new BuildingResource { Id = 1, BuildingBaseId = 1, ResourceId = 1, CostId = 1 },
+                new BuildingResource { Id = 2, BuildingBaseId = 1, ResourceId = 2, CostId = 2 },
+                new BuildingResource { Id = 3, BuildingBaseId = 1, ResourceId = 3, CostId = 3 },
+                new BuildingResource { Id = 4, BuildingBaseId = 1, ResourceId = 4, CostId = 4 },
+                new BuildingResource { Id = 5, BuildingBaseId = 2, ResourceId = 1, CostId = 5 },
+                new BuildingResource { Id = 6, BuildingBaseId = 2, ResourceId = 2, CostId = 6 },
+                new BuildingResource { Id = 7, BuildingBaseId = 2, ResourceId = 3, CostId = 7 },
+                new BuildingResource { Id = 8, BuildingBaseId = 2, ResourceId = 4, CostId = 8 },
+                new BuildingResource { Id = 9, BuildingBaseId = 3, ResourceId = 1, CostId = 9 },
+                new BuildingResource { Id = 10, BuildingBaseId = 3, ResourceId = 2, CostId = 10 },
+                new BuildingResource { Id = 11, BuildingBaseId = 3, ResourceId = 3, CostId = 11 },
+                new BuildingResource { Id = 12, BuildingBaseId = 3, ResourceId = 4, CostId = 12 },
+                new BuildingResource { Id = 13, BuildingBaseId = 4, ResourceId = 1, CostId = 13 },
+                new BuildingResource { Id = 14, BuildingBaseId = 4, ResourceId = 2, CostId = 14 },
+                new BuildingResource { Id = 15, BuildingBaseId = 4, ResourceId = 3, CostId = 15 },
+                new BuildingResource { Id = 16, BuildingBaseId = 4, ResourceId = 4, CostId = 16 },
+                new BuildingResource { Id = 17, BuildingBaseId = 5, ResourceId = 1, CostId = 17 },
+                new BuildingResource { Id = 18, BuildingBaseId = 5, ResourceId = 2, CostId = 18 },
+                new BuildingResource { Id = 19, BuildingBaseId = 5, ResourceId = 3, CostId = 19 },
+                new BuildingResource { Id = 20, BuildingBaseId = 5, ResourceId = 4, CostId = 20 },
+                new BuildingResource { Id = 21, BuildingBaseId = 6, ResourceId = 1, CostId = 21 },
+                new BuildingResource { Id = 22, BuildingBaseId = 6, ResourceId = 2, CostId = 22 },
+                new BuildingResource { Id = 23, BuildingBaseId = 6, ResourceId = 3, CostId = 23 },
+                new BuildingResource { Id = 24, BuildingBaseId = 6, ResourceId = 4, CostId = 24 },
+                new BuildingResource { Id = 25, BuildingBaseId = 7, ResourceId = 1, CostId = 25 },
+                new BuildingResource { Id = 26, BuildingBaseId = 7, ResourceId = 2, CostId = 26 },
+                new BuildingResource { Id = 27, BuildingBaseId = 7, ResourceId = 3, CostId = 27 },
+                new BuildingResource { Id = 28, BuildingBaseId = 7, ResourceId = 4, CostId = 28 },
+                new BuildingResource { Id = 29, BuildingBaseId = 8, ResourceId = 1, CostId = 29 },
+                new BuildingResource { Id = 30, BuildingBaseId = 8, ResourceId = 2, CostId = 30 },
+                new BuildingResource { Id = 31, BuildingBaseId = 8, ResourceId = 3, CostId = 31 },
+                new BuildingResource { Id = 32, BuildingBaseId = 8, ResourceId = 4, CostId = 32 }
             );
 
             modelBuilder.Entity<BuildingEffect>().HasData(

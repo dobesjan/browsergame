@@ -16,9 +16,6 @@ namespace BrowserGame.Models.Resources
         [ValidateNever]
         public List<VillageResourceField> VillageFields { get; set; }
 
-        [ValidateNever]
-        public List<ResourceFieldResource> ResourceFieldResources { get; set; }
-
         public int ResourceId { get; set; }
 
         [ValidateNever]

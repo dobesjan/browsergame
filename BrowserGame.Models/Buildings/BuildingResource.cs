@@ -12,10 +12,10 @@ namespace BrowserGame.Models.Buildings
 {
     public class BuildingResource : Entity
     {
-        public int BuildingId { get; set; }
+        public int BuildingBaseId { get; set; }
 
         [ValidateNever]
-        public Building Building { get; set; }
+        public BuildingBase Building { get; set; }
 
         public int ResourceId { get; set; }
 

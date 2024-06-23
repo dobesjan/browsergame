@@ -12,9 +12,6 @@ namespace BrowserGame.Models.Buildings
     public class Building : BuildingBase
     {
         [ValidateNever]
-        public List<BuildingResource> BuildingResources { get; set; }
-
-        [ValidateNever]
         public List<BuildingEffect> BuildingEffects { get; set; }
 
         [ValidateNever]
