@@ -80,7 +80,7 @@ namespace BrowserGame.BusinessLayer.Villages
 
             if (village.BuildQueueItems != null && village.BuildQueueItems.Any())
             {
-                buildOrder = village.BuildQueueItems.Last().BuildOrder + 1;
+                buildOrder = village.BuildQueueItems.OrderBy(q => q.BuildOrder).Last().BuildOrder + 1;
             }
 
             var item = new BuildQueueItem
