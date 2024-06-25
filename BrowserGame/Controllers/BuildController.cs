@@ -27,12 +27,13 @@ namespace BrowserGame.Controllers
         {
             var player = GetPlayer();
             Village village = _villageService.GetVillage(villageId, player.Id);
+            Building building = _unitOfWork.BuildingRepository.Get(buildingId);
 
             BuildingViewModel = new BuildingViewModel
             {
                 Village = village,
                 SlotId = slotId,
-                BuildingId = buildingId
+                Building = building
             };
 
             return View(BuildingViewModel);
@@ -44,7 +45,7 @@ namespace BrowserGame.Controllers
             
             return HandleResponse(() =>
             {
-                _buildingService.AddBuildOrder(vm.Village.Id, vm.SlotId, vm.BuildingId);
+                _buildingService.AddBuildOrder(vm.Village.Id, vm.SlotId, vm.Building.Id);
                 return Redirect("/");
             }, Redirect("/"));
         }

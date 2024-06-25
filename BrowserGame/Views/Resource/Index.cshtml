@@ -1,0 +1,6 @@
+﻿@model Village
+
+@foreach (var field in Model.VillageFields)
+{
+    <a asp-controller="Build" asp-action="Index" asp-route-villageId="Model.Id">Resource name @field.ResourceField.Name</a>
+}

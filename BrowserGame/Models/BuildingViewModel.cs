@@ -1,4 +1,5 @@
-﻿using BrowserGame.Models.Villages;
+﻿using BrowserGame.Models.Buildings;
+using BrowserGame.Models.Villages;
 
 namespace BrowserGame.Models
 {
@@ -6,6 +7,6 @@ namespace BrowserGame.Models
     {
         public Village Village { get; set; }
         public int SlotId { get; set; }
-        public int BuildingId { get; set; }
+        public Building Building { get; set; }
     }
 }
