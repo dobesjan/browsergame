@@ -1,4 +1,5 @@
-﻿using BrowserGame.BusinessLayer.Villages;
+﻿using BrowserGame.BusinessLayer.Exceptions;
+using BrowserGame.BusinessLayer.Villages;
 using BrowserGame.DataAccess.UnitOfWork;
 using BrowserGame.Models.Villages;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -127,7 +128,7 @@ namespace BrowserGame.BusinessLayer.Resources
         public bool HasEnoughResources(Village village, int level, int buildingId)
         {
             var building = _unitOfWork.BuildingBaseRepository.Get(buildingId);
-            if (building == null) throw new InvalidDataException("Building not found");
+            if (building == null) throw new GameException("Building not found");
 
             foreach (var resource in village.VillageResources)
             {

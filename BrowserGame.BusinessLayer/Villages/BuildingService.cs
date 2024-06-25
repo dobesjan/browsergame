@@ -1,4 +1,5 @@
-﻿using BrowserGame.BusinessLayer.Resources;
+﻿using BrowserGame.BusinessLayer.Exceptions;
+using BrowserGame.BusinessLayer.Resources;
 using BrowserGame.DataAccess.UnitOfWork;
 using BrowserGame.Models.Buildings;
 using BrowserGame.Models.Villages;
@@ -37,7 +38,7 @@ namespace BrowserGame.BusinessLayer.Villages
             // TODO: Refactor it to work with slots as well
 
             // TODO: Make slot range configurable
-            if (slotId < 0 || slotId > 20) throw new InvalidDataException($"Wrong slot with id '{slotId}'");
+            if (slotId < 0 || slotId > 20) throw new GameException($"Wrong slot with id '{slotId}'");
 
             int level = 0;
 
@@ -48,7 +49,7 @@ namespace BrowserGame.BusinessLayer.Villages
                 villageBuilding = village.VillageBuildings.FirstOrDefault(vb => vb.SlotId == slotId);
             }
 
-            if (villageBuilding != null && villageBuilding.Building.Id != buildingId) throw new InvalidDataException("Wrong building");
+            if (villageBuilding != null && villageBuilding.Building.Id != buildingId) throw new GameException("Wrong building");
             if (villageBuilding != null && villageBuilding.Building.Id == buildingId)
             {
                 level = villageBuilding.Level;
@@ -56,8 +57,8 @@ namespace BrowserGame.BusinessLayer.Villages
 
             int nextLevel = level + 1;
 
-            if (!_gameResourceService.HasEnoughResources(village, level, buildingId)) throw new InvalidDataException("Not enough resources");
-            if (!CheckAndUpdateBuildProcess(village)) throw new InvalidDataException("Not enough build queue capacity");
+            if (!_gameResourceService.HasEnoughResources(village, level, buildingId)) throw new GameException("Not enough resources");
+            if (!CheckAndUpdateBuildProcess(village)) throw new GameException("Not enough build queue capacity");
 
             //TODO: Slots validation??
 
@@ -88,15 +89,15 @@ namespace BrowserGame.BusinessLayer.Villages
 
         public void AddResourceFieldBuildOrder(Village village, int resourceFieldId)
         {
-            if (village.VillageFields == null) throw new InvalidDataException($"Village fields not found for village with id '{village.Id}'");
+            if (village.VillageFields == null) throw new GameException($"Village fields not found for village with id '{village.Id}'");
 
             var villageField = village.VillageFields.FirstOrDefault(r => r.Id == resourceFieldId);
-            if (villageField == null) throw new InvalidDataException($"Resource field with id '{resourceFieldId}' not found for village with id '{village.Id}'");
+            if (villageField == null) throw new GameException($"Resource field with id '{resourceFieldId}' not found for village with id '{village.Id}'");
 
             int nextLevel = villageField.Level + 1;
 
-            if (!_gameResourceService.HasEnoughResources(village, villageField.Level, villageField.ResourceField.Id)) throw new InvalidDataException("Not enough resources");
-            if (!CheckAndUpdateBuildProcess(village)) throw new InvalidDataException("Not enough build queue capacity");
+            if (!_gameResourceService.HasEnoughResources(village, villageField.Level, villageField.ResourceField.Id)) throw new GameException("Not enough resources");
+            if (!CheckAndUpdateBuildProcess(village)) throw new GameException("Not enough build queue capacity");
 
             var duration = villageField.ResourceField.GetBuildDuration(nextLevel);
             AddResourceFieldToBuildQueue(village, villageField.Id, duration, nextLevel);
