@@ -1,5 +1,6 @@
 ﻿using BrowserGame.BusinessLayer.Resources;
 using BrowserGame.DataAccess.UnitOfWork;
+using BrowserGame.Models.Buildings;
 using BrowserGame.Models.Villages;
 using Microsoft.Extensions.Logging;
 using System;
@@ -75,28 +76,30 @@ namespace BrowserGame.BusinessLayer.Villages
                 _unitOfWork.VillageBuildingRepository.Save();
             }
 
-            var startTime = DateTime.UtcNow;
-            var endTime = startTime.AddSeconds(villageBuilding.Building.GetBuildDuration(nextLevel));
+            var duration = villageBuilding.Building.GetBuildDuration(nextLevel);
+            AddBuildQueueItem(village, villageBuilding.Id, duration, nextLevel);
+        }
 
-            int buildOrder = 1;
+        public void AddResourceFieldBuildOrder(int villageId, int resourceFieldId)
+        {
+            var village = _villageService.GetVillage(villageId);
+            AddResourceFieldBuildOrder(village, resourceFieldId);
+        }
 
-            if (village.BuildQueueItems != null && village.BuildQueueItems.Any())
-            {
-                buildOrder = village.BuildQueueItems.OrderBy(q => q.BuildOrder).Last().BuildOrder + 1;
-            }
+        public void AddResourceFieldBuildOrder(Village village, int resourceFieldId)
+        {
+            if (village.VillageFields == null) throw new InvalidDataException($"Village fields not found for village with id '{village.Id}'");
 
-            var item = new BuildQueueItem
-            {
-                VillageId = village.Id,
-                VillageBuildingId = buildingId,
-                BuildStart = startTime,
-                BuildEnd = endTime,
-                BuildOrder = buildOrder,
-                TargetLevel = nextLevel
-            };
+            var villageField = village.VillageFields.FirstOrDefault(r => r.Id == resourceFieldId);
+            if (villageField == null) throw new InvalidDataException($"Resource field with id '{resourceFieldId}' not found for village with id '{village.Id}'");
 
-            _unitOfWork.BuildQueueItemRepository.Add(item);
-            _unitOfWork.BuildQueueItemRepository.Save();
+            int nextLevel = villageField.Level + 1;
+
+            if (!_gameResourceService.HasEnoughResources(village, villageField.Level, villageField.ResourceField.Id)) throw new InvalidDataException("Not enough resources");
+            if (!CheckAndUpdateBuildProcess(village)) throw new InvalidDataException("Not enough build queue capacity");
+
+            var duration = villageField.ResourceField.GetBuildDuration(nextLevel);
+            AddResourceFieldToBuildQueue(village, villageField.Id, duration, nextLevel);
         }
 
         public bool CheckAndUpdateBuildProcess(int villageId)
@@ -153,6 +156,60 @@ namespace BrowserGame.BusinessLayer.Villages
             }
 
             return true;
+        }
+
+        private int CalculateBuildOrder(Village village)
+        {
+            int buildOrder = 1;
+
+            if (village.BuildQueueItems != null && village.BuildQueueItems.Any())
+            {
+                buildOrder = village.BuildQueueItems.OrderBy(q => q.BuildOrder).Last().BuildOrder + 1;
+            }
+
+            return buildOrder;
+        }
+
+        private void AddBuildQueueItem(Village village, int villageBuildingId, int buildDuration, int nextLevel)
+        {
+            var startTime = DateTime.UtcNow;
+            var endTime = startTime.AddSeconds(buildDuration);
+
+            int buildOrder = CalculateBuildOrder(village);
+
+            var item = new BuildQueueItem
+            {
+                VillageId = village.Id,
+                VillageBuildingId = villageBuildingId,
+                BuildStart = startTime,
+                BuildEnd = endTime,
+                BuildOrder = buildOrder,
+                TargetLevel = nextLevel
+            };
+
+            _unitOfWork.BuildQueueItemRepository.Add(item);
+            _unitOfWork.BuildQueueItemRepository.Save();
+        }
+
+        private void AddResourceFieldToBuildQueue(Village village, int villageResourceFieldId, int buildDuration, int nextLevel)
+        {
+            var startTime = DateTime.UtcNow;
+            var endTime = startTime.AddSeconds(buildDuration);
+
+            int buildOrder = CalculateBuildOrder(village);
+
+            var item = new BuildQueueItem
+            {
+                VillageId = village.Id,
+                VillageResourceFieldId = villageResourceFieldId,
+                BuildStart = startTime,
+                BuildEnd = endTime,
+                BuildOrder = buildOrder,
+                TargetLevel = nextLevel
+            };
+
+            _unitOfWork.BuildQueueItemRepository.Add(item);
+            _unitOfWork.BuildQueueItemRepository.Save();
         }
     }
 }

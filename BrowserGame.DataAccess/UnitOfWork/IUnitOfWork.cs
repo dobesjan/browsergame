@@ -20,6 +20,7 @@ namespace BrowserGame.DataAccess.UnitOfWork
         IVillageResourceFieldRepository VillageResourceFieldRepository { get; }
         IVillageBuildingRepository VillageBuildingRepository { get; }
         IBuildQueueItemRepository BuildQueueItemRepository { get; }
+        IBuildingBaseRepository BuildingBaseRepository { get; }
         IBuildingRepository BuildingRepository { get; }
     }
 }

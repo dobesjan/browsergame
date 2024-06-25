@@ -126,7 +126,7 @@ namespace BrowserGame.BusinessLayer.Resources
 
         public bool HasEnoughResources(Village village, int level, int buildingId)
         {
-            var building = _unitOfWork.BuildingRepository.Get(buildingId);
+            var building = _unitOfWork.BuildingBaseRepository.Get(buildingId);
             if (building == null) throw new InvalidDataException("Building not found");
 
             foreach (var resource in village.VillageResources)

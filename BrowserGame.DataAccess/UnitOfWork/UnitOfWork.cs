@@ -23,6 +23,7 @@ namespace BrowserGame.DataAccess.UnitOfWork
         public IVillageResourceFieldRepository VillageResourceFieldRepository { get; }
         public IVillageBuildingRepository VillageBuildingRepository { get; }
         public IBuildQueueItemRepository BuildQueueItemRepository { get; }
+        public IBuildingBaseRepository BuildingBaseRepository { get; }
         public IBuildingRepository BuildingRepository { get; }
 
         public UnitOfWork(ApplicationDbContext context)
@@ -37,6 +38,7 @@ namespace BrowserGame.DataAccess.UnitOfWork
             VillageResourceFieldRepository = new VillageResourceFieldRepository(context);
             VillageBuildingRepository = new VillageBuildingRepository(context);
             BuildQueueItemRepository = new BuildQueueItemRepository(context);
+            BuildingBaseRepository = new BuildingBaseRepository(context);
             BuildingRepository = new BuildingRepository(context);
         }
     }
