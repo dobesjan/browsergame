@@ -1,0 +1,17 @@
+﻿@model VillageViewModel
+
+@foreach(var buildingSpace in Model.BuildingSpaces)
+{
+    @if(buildingSpace.VillageBuilding == null)
+    {
+        <a asp-controller="Build" asp-action="Index" asp-route-villageId="@Model.Village.Id" asp-route-slotId="@buildingSpace.SlotId">
+            <p>Free building space</p>
+        </a>
+    }
+    else
+    {
+        <a asp-controller="Build" asp-action="Index" asp-route-villageId="@Model.Village.Id" asp-route-buildingId="@buildingSpace.VillageBuilding.Building.Id" asp-route-slotId="@buildingSpace.SlotId">
+            <p>@buildingSpace.VillageBuilding.Building.Name</p>
+        </a>
+    }
+}

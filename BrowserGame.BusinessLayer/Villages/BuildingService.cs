@@ -38,7 +38,7 @@ namespace BrowserGame.BusinessLayer.Villages
             // TODO: Refactor it to work with slots as well
 
             // TODO: Make slot range configurable
-            if (slotId < 0 || slotId > 20) throw new GameException($"Wrong slot with id '{slotId}'");
+            if (ValidateBuildingSlots(slotId)) throw new GameException($"Wrong slot with id '{slotId}'");
 
             int level = 0;
 
@@ -59,6 +59,7 @@ namespace BrowserGame.BusinessLayer.Villages
 
             if (!_gameResourceService.HasEnoughResources(village, level, buildingId)) throw new GameException("Not enough resources");
             if (!CheckAndUpdateBuildProcess(village)) throw new GameException("Not enough build queue capacity");
+            if (!BuildingMeetsAllRequirements(village, buildingId)) throw new GameException("Some of requirements are not met to be able to build building.");
 
             //TODO: Slots validation??
 
@@ -79,6 +80,18 @@ namespace BrowserGame.BusinessLayer.Villages
 
             var duration = villageBuilding.Building.GetBuildDuration(nextLevel);
             AddBuildQueueItem(village, villageBuilding.Id, duration, nextLevel);
+        }
+
+        public List<VillageBuilding> GetVillageBuildings(int villageId)
+        {
+            var village = _villageService.GetVillage(villageId);
+            return GetVillageBuildings(village);
+        }
+
+        public List<VillageBuilding> GetVillageBuildings(Village village)
+        {
+            //TODO: Make slot range configurable
+            throw new NotImplementedException();
         }
 
         public void AddResourceFieldBuildOrder(int villageId, int resourceFieldId)
@@ -159,6 +172,43 @@ namespace BrowserGame.BusinessLayer.Villages
             return true;
         }
 
+        public List<BuildingRequirement> CheckBuildingRequirements(int villageId, int buildingId)
+        {
+            var village = _villageService.GetVillage(villageId);
+            return CheckBuildingRequirements(village, buildingId);
+        }
+
+        public List<BuildingRequirement> CheckBuildingRequirements(Village village, int buildingId)
+        {
+            Building building = _unitOfWork.BuildingRepository.Get(buildingId);
+            if (building == null) throw new ArgumentNullException($"Building with id '{buildingId}' not found");
+            if (building.BuildingRequirements == null) return new List<BuildingRequirement>();
+
+            List<BuildingRequirement> requirements = building.BuildingRequirements;
+
+            if (village.VillageBuildings != null && village.VillageBuildings.Any())
+            {
+                foreach (var requirement in building.BuildingRequirements)
+                {
+                    foreach (var villageBuilding in village.VillageBuildings)
+                    {
+                        if (requirement.BuildingId == villageBuilding.Id && requirement.Level == villageBuilding.Level)
+                        {
+                            requirements.RemoveAll(r => r.BuildingId == villageBuilding.Id);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return requirements;
+        }
+
+        private bool BuildingMeetsAllRequirements(Village village, int buildingId)
+        {
+            return !CheckBuildingRequirements(village, buildingId).Any();
+        }
+
         private int CalculateBuildOrder(Village village)
         {
             int buildOrder = 1;
@@ -211,6 +261,12 @@ namespace BrowserGame.BusinessLayer.Villages
 
             _unitOfWork.BuildQueueItemRepository.Add(item);
             _unitOfWork.BuildQueueItemRepository.Save();
+        }
+
+        public bool ValidateBuildingSlots(int slotId)
+        {
+            if (slotId < 0 || slotId > 20) return false;
+            return true;
         }
     }
 }

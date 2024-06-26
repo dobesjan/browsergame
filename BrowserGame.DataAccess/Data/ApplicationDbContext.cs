@@ -38,6 +38,7 @@ namespace BrowserGame.DataAccess.Data
         public DbSet<Building> Buildings { get; set; }
         public DbSet<BuildingEffect> BuildingsEffects { get; set; }
         public DbSet<BuildingResource> BuildingsResource { get; set; }
+        public DbSet<BuildingRequirement> BuildingsRequirements { get; set; }
         #endregion
         #endregion
 
@@ -136,7 +137,7 @@ namespace BrowserGame.DataAccess.Data
                 new Building { Id = 1, Name = "Castle", BaseBuildDuration = 10, BuildCoefficient = 1.5, MaxLevel = 20, Enabled = true, Description = "Description" },
                 new Building { Id = 2, Name = "Storage", BaseBuildDuration = 30, BuildCoefficient = 1.3, MaxLevel = 20, Enabled = true, Description = "Description" },
                 new Building { Id = 3, Name = "Granary", BaseBuildDuration = 20, BuildCoefficient = 1.2, MaxLevel = 20, Enabled = true, Description = "Description" },
-                new Building { Id = 3, Name = "Bank", BaseBuildDuration = 20, BuildCoefficient = 1.2, MaxLevel = 20, Enabled = true, Description = "Description" }
+                new Building { Id = 4, Name = "Bank", BaseBuildDuration = 20, BuildCoefficient = 1.2, MaxLevel = 20, Enabled = true, Description = "Description" }
             );
 
             modelBuilder.Entity<Cost>().HasData(
@@ -214,6 +215,10 @@ namespace BrowserGame.DataAccess.Data
                 new BuildingEffect { Id = 2, BuildingId = 2, EffectId = 2, StartingValue = 800, Coefficient = 1.7 },
                 new BuildingEffect { Id = 3, BuildingId = 3, EffectId = 3, StartingValue = 800, Coefficient = 1.7 },
                 new BuildingEffect { Id = 4, BuildingId = 4, EffectId = 4, StartingValue = 100, Coefficient = 1.4 }
+            );
+
+            modelBuilder.Entity<BuildingRequirement>().HasData(
+                new BuildingRequirement { Id = 1, RequiredForBuildingId = 4, BuildingId = 1, Level = 5 }
             );
         }
     }

@@ -51,11 +51,15 @@ namespace BrowserGame.Controllers
             return player;
         }
 
-        protected IActionResult GetVillageView(int villageId) 
+        protected Village GetVillage(int villageId)
         {
             var player = GetPlayer();
-            Village village = _villageService.GetVillage(villageId, player.Id);
+            return _villageService.GetVillage(villageId, player.Id);
+        }
 
+        protected IActionResult GetVillageView(int villageId) 
+        {
+            Village village = GetVillage(villageId);
             return View(village);
         }
 

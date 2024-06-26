@@ -25,8 +25,7 @@ namespace BrowserGame.Controllers
 
         public IActionResult Index(int villageId, int slotId, int buildingId)
         {
-            var player = GetPlayer();
-            Village village = _villageService.GetVillage(villageId, player.Id);
+            Village village = GetVillage(villageId);
             Building building = _unitOfWork.BuildingRepository.Get(buildingId);
 
             BuildingViewModel = new BuildingViewModel
@@ -42,7 +41,6 @@ namespace BrowserGame.Controllers
         [HttpPost]
         public IActionResult Index(BuildingViewModel vm)
         {
-            
             return HandleResponse(() =>
             {
                 _buildingService.AddBuildOrder(vm.Village.Id, vm.SlotId, vm.Building.Id);
@@ -50,10 +48,17 @@ namespace BrowserGame.Controllers
             }, Redirect("/"));
         }
 
+        public IActionResult BuildMenu(int villageId, int slotId)
+        {
+            if (!_buildingService.ValidateBuildingSlots(slotId)) return Redirect("/");
+            // TODO: Consider how to resolve requirements
+
+            return View();
+        }
+
         public IActionResult LevelUpResourceField(int villageId, int resourceFieldId) 
         {
-            var player = GetPlayer();
-            Village village = _villageService.GetVillage(villageId, player.Id);
+            Village village = GetVillage(villageId);
 
             ResourceBuildingViewModel = new ResourceBuildingViewModel
             {
