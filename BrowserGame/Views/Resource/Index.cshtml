@@ -3,5 +3,5 @@
 @foreach (var field in Model.VillageFields)
 {
     <h2>@field.ResourceField.Name</h2>
-    <a asp-controller="Build" asp-action="Index" asp-route-villageId="@Model.Id">Upgrade to level @(field.Level + 1)</a>
+    <a asp-action="Detail" asp-route-villageId="@Model.Id" asp-route-resourceFieldId="@field.ResourceFieldId">Detail</a>
 }

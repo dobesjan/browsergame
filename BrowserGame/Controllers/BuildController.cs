@@ -16,9 +16,6 @@ namespace BrowserGame.Controllers
         public BuildingViewModel BuildingViewModel { get; set; }
 
         [BindProperty]
-        public ResourceBuildingViewModel ResourceBuildingViewModel { get; set; }
-
-        [BindProperty]
         public BuildingMenuViewModel BuildingMenuViewModel { get; set; }
 
         public BuildController(ILogger<AccountController> logger, IUnitOfWork unitOfWork, IVillageService villageService, IBuildingService buildingService) : base(logger, unitOfWork, villageService)
@@ -65,25 +62,12 @@ namespace BrowserGame.Controllers
             }, Redirect("/"));
         }
 
-        public IActionResult LevelUpResourceField(int villageId, int resourceFieldId) 
-        {
-            Village village = GetVillage(villageId);
-
-            ResourceBuildingViewModel = new ResourceBuildingViewModel
-            {
-                Village = village,
-                VillageResourceFieldId = resourceFieldId
-            };
-
-            return View(ResourceBuildingViewModel);
-        }
-
-        [HttpPost]
-        public IActionResult LevelUpResourceField(ResourceBuildingViewModel vm)
+        [HttpGet]
+        public IActionResult LevelUpResourceField(int villageId, int resourceFieldId)
         {
             return HandleResponse(() =>
             {
-                _buildingService.AddResourceFieldBuildOrder(vm.Village.Id, vm.VillageResourceFieldId);
+                _buildingService.AddResourceFieldBuildOrder(villageId, resourceFieldId);
                 return Redirect("/");
             }, Redirect("/"));
         }

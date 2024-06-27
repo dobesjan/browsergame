@@ -1,0 +1,12 @@
+﻿@model ResourceBuildingViewModel
+
+@if(Model.VillageResourceField != null)
+{
+    <h2>@Model.VillageResourceField.ResourceField.Name</h2>
+    <p>@Model.VillageResourceField.ResourceField.Description</p>
+    <a asp-controller="Build" asp-action="LevelUpResourceField">Upgrade to level @(Model.VillageResourceField.Level + 1)</a>
+}
+else
+{
+    <h2>Resource field not found</h2>
+}
