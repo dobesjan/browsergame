@@ -18,6 +18,9 @@ namespace BrowserGame.Controllers
         [BindProperty]
         public ResourceBuildingViewModel ResourceBuildingViewModel { get; set; }
 
+        [BindProperty]
+        public BuildingMenuViewModel BuildingMenuViewModel { get; set; }
+
         public BuildController(ILogger<AccountController> logger, IUnitOfWork unitOfWork, IVillageService villageService, IBuildingService buildingService) : base(logger, unitOfWork, villageService)
         {
             _buildingService = buildingService;
@@ -38,22 +41,28 @@ namespace BrowserGame.Controllers
             return View(BuildingViewModel);
         }
 
-        [HttpPost]
-        public IActionResult Index(BuildingViewModel vm)
-        {
-            return HandleResponse(() =>
-            {
-                _buildingService.AddBuildOrder(vm.Village.Id, vm.SlotId, vm.Building.Id);
-                return Redirect("/");
-            }, Redirect("/"));
-        }
-
         public IActionResult BuildMenu(int villageId, int slotId)
         {
             if (!_buildingService.ValidateBuildingSlots(slotId)) return Redirect("/");
-            // TODO: Consider how to resolve requirements
 
-            return View();
+            Village village = GetVillage(villageId);
+            BuildingMenuViewModel = new BuildingMenuViewModel
+            {
+                Village = village,
+                AvailableBuildings = _buildingService.GetAvailableBuildings(village)
+            };
+
+            return View(BuildingMenuViewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Build(int villageId, int slotId, int buildingId)
+        {
+            return HandleResponse(() =>
+            {
+                _buildingService.AddBuildOrder(villageId, slotId, buildingId);
+                return Redirect("/");
+            }, Redirect("/"));
         }
 
         public IActionResult LevelUpResourceField(int villageId, int resourceFieldId) 

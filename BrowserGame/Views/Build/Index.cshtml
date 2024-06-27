@@ -1,0 +1,5 @@
+﻿@model BuildingViewModel
+
+<h2>@Model.Building.Name</h2>
+<p>@Model.Building.Description</p>
+<a asp-controller="Building" asp-action="Build" asp-route-villageId="Model.Village.Id" asp-route-slotId="Model.SlotId" asp-route-buildingId="Model.Building.Id">Build</a>

@@ -14,6 +14,8 @@ namespace BrowserGame.BusinessLayer.Villages
         void AddBuildOrder(Village village, int slotId, int buildingId);
         List<VillageBuilding> GetVillageBuildings(int villageId);
         List<VillageBuilding> GetVillageBuildings(Village village);
+        List<Building> GetAvailableBuildings(int villageId);
+        List<Building> GetAvailableBuildings(Village village);
         bool ValidateBuildingSlots(int slotId);
         void AddResourceFieldBuildOrder(int villageId, int resourceFieldId);
         void AddResourceFieldBuildOrder(Village village, int resourceFieldId);

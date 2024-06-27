@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -92,6 +93,36 @@ namespace BrowserGame.BusinessLayer.Villages
         {
             //TODO: Make slot range configurable
             throw new NotImplementedException();
+        }
+
+        public List<Building> GetAvailableBuildings(int villageId)
+        {
+            var village = _villageService.GetVillage(villageId);
+            return GetAvailableBuildings(village);
+        }
+
+        public List<Building> GetAvailableBuildings(Village village)
+        {
+            var buildings = _unitOfWork.BuildingRepository.GetAll(b => b.Enabled == true).ToList();
+            if (buildings == null) throw new ArgumentNullException("Buildings are null");
+
+            if (village.VillageBuildings != null)
+            {
+                foreach (var villageBuilding in village.VillageBuildings)
+                {
+                    buildings.RemoveAll(b => b.Id == villageBuilding.BuildingId);
+                }
+            }
+
+            foreach (var building in buildings)
+            {
+                if (!BuildingMeetsAllRequirements(village, building.Id))
+                {
+                    buildings.RemoveAll(b => b.Id == building.Id);
+                }
+            }
+
+            return buildings;
         }
 
         public void AddResourceFieldBuildOrder(int villageId, int resourceFieldId)
