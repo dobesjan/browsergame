@@ -11,7 +11,7 @@ namespace BrowserGame.BusinessLayer.Villages
     {
         Village GetVillage(int villageId);
         Village GetVillage(int villageId, int playerId);
-        void CreateVillage(int playerId);
+        Village CreateVillage(int playerId);
         double GetEffectValue(int villageId, int effectId);
     }
 }

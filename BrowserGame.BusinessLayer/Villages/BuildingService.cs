@@ -168,7 +168,7 @@ namespace BrowserGame.BusinessLayer.Villages
                 if (item.IsBuildFinished())
                 {
                     // Increase level of building
-                    if (item.VillageBuilding != null && item.VillageBuildingId.HasValue)
+                    if (item.VillageBuilding != null)
                     {
                         item.VillageBuilding.Level = item.TargetLevel;
 

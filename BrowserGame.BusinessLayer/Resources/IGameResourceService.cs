@@ -12,6 +12,7 @@ namespace BrowserGame.BusinessLayer.Resources
     {
         void InitVillageResources(int villageId);
         void InitResourceFields(int villageId);
+        void CreateVillageWithResourceInit(int playerId);
 
         //Calculates production in timeframe between last calculation and now
         void CalculateProductionForVillage(int villageId);

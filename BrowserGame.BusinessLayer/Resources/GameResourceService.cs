@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -68,9 +69,16 @@ namespace BrowserGame.BusinessLayer.Resources
             _unitOfWork.VillageResourceFieldRepository.Save();
         }
 
-        //TODO: Consider production calculation flow
-        // What to do when building is ranked up?
-        public void CalculateProductionForVillage(int villageId)
+        public void CreateVillageWithResourceInit(int playerId)
+        {
+            Village village = _villageService.CreateVillage(playerId);
+			InitVillageResources(village.Id);
+			InitResourceFields(village.Id);
+		}
+
+		//TODO: Consider production calculation flow
+		// What to do when building is ranked up?
+		public void CalculateProductionForVillage(int villageId)
         {
             var village = _unitOfWork.VillageRepository.Get(villageId);
 

@@ -14,13 +14,11 @@ namespace BrowserGame.BusinessLayer.Villages
     {
         private readonly ILogger<VillageService> _logger;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IGameResourceService _resourceService;
 
-        public VillageService(ILogger<VillageService> logger, IUnitOfWork unitOfWork, IGameResourceService resourceService)
+        public VillageService(ILogger<VillageService> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            _resourceService = resourceService;
         }
 
         private Village GetVillageInternal(Village village)
@@ -47,7 +45,7 @@ namespace BrowserGame.BusinessLayer.Villages
             return GetVillageInternal(village);
         }
 
-        public void CreateVillage(int playerId)
+        public Village CreateVillage(int playerId)
         {
             var player = _unitOfWork.PlayerRepository.Get(playerId);
             if (player != null) 
@@ -69,8 +67,7 @@ namespace BrowserGame.BusinessLayer.Villages
             _unitOfWork.VillageRepository.Add(village);
             _unitOfWork.VillageRepository.Save();
 
-            _resourceService.InitVillageResources(village.Id);
-            _resourceService.InitResourceFields(village.Id);
+            return village;
         }
 
         public double GetEffectValue(int villageId, int effectId)

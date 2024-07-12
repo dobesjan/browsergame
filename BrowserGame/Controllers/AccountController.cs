@@ -9,14 +9,19 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using BrowserGame.Models.Users;
 using BrowserGame.BusinessLayer.Villages;
+using BrowserGame.BusinessLayer.Resources;
+using BrowserGame.Models.Villages;
+using System.ComponentModel.Design;
 
 namespace BrowserGame.Controllers
 {
     public class AccountController : BrowserBaseController
     {
-        public AccountController(ILogger<AccountController> logger, IUnitOfWork unitOfWork, IVillageService villageService) : base(logger, unitOfWork, villageService)
-        {
+        private readonly IGameResourceService _gameResourceService;
 
+        public AccountController(ILogger<AccountController> logger, IUnitOfWork unitOfWork, IVillageService villageService, IGameResourceService gameResourceService) : base(logger, unitOfWork, villageService)
+        {
+            _gameResourceService = gameResourceService;
         }
 
         public async Task Login(string returnUrl = "/")
@@ -77,8 +82,8 @@ namespace BrowserGame.Controllers
 
                     // Initialize starting resources in game
                     player = _unitOfWork.PlayerRepository.Get(p => p.UserId == userId);
-                    _villageService.CreateVillage(player.Id);
-                }
+					_gameResourceService.CreateVillageWithResourceInit(player.Id);
+				}
             }
 
             return LocalRedirect(returnUrl);
